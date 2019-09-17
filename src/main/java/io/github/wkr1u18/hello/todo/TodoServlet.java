@@ -33,7 +33,9 @@ class TodoServlet {
     @PutMapping("/{id}")
     ResponseEntity<Todo> toggleTodo(@PathVariable Integer id) {
        var todo = repository.findById(id);
+
        todo.ifPresent(t -> {
+
            t.setDone(!t.getDone());
            repository.save(t);
        });
@@ -42,6 +44,7 @@ class TodoServlet {
 
     @PostMapping
     ResponseEntity<Todo> saveTodo(@RequestBody Todo todo) {
+        todo.setDone(false);
         return ResponseEntity.ok(repository.save(todo));
     }
 
